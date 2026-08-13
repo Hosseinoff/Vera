@@ -1,0 +1,22 @@
+<!doctype html><html lang="fa" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ورود مدیر | VERA Botanique</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="assets/css/style.css"></head><body>
+<div id="toast" class="toast"></div><div class="container" style="min-height:85vh;display:grid;place-items:center">
+<div class="form" style="width:min(430px,100%);text-align:center">
+<div class="brand" style="justify-content:center;margin:auto auto 25px"><span class="brand-mark">V</span><span><b>VERA</b><small>ADMIN</small></span></div>
+<h1 style="margin-bottom:5px">ورود مدیر</h1><p class="muted">برای ورود به پنل مدیریت رمز عبور را وارد کنید.</p>
+<form id="loginForm"><div class="form-group" style="text-align:right"><label>رمز عبور</label>
+<input id="adminPassword" type="password" autocomplete="current-password" required></div>
+<button class="btn" style="width:100%">ورود به پنل</button></form>
+<p id="loginError" style="color:#a83c32;font-size:12px;display:none;margin-top:12px">رمز عبور اشتباه است.</p>
+</div></div>
+<script src="assets/js/app.js"></script><script>
+const ADMIN_PASSWORD='Vera@1405';
+document.getElementById('loginForm').onsubmit=e=>{
+ e.preventDefault();
+ if(document.getElementById('adminPassword').value===ADMIN_PASSWORD){
+  sessionStorage.setItem('vera_admin_auth','1'); location.href='admin.html';
+ }else document.getElementById('loginError').style.display='block';
+};
+</script></body></html>

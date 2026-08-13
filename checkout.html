@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تسویه حساب | VERA Botanique</title>
+<meta name="description" content="VERA Botanique؛ فروشگاه آنلاین گل، گیاه، گلدان و اکسسوری با طراحی لوکس و ارسال به سراسر ایران.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://example.com/">
+<meta property="og:title" content="تسویه حساب | VERA Botanique">
+<meta property="og:description" content="فروشگاه لوکس گل و گیاه VERA Botanique">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div class="topbar">ارسال به سراسر ایران · ارسال رایگان برای سفارش‌های منتخب · پشتیبانی ۷ روز هفته</div>
+<header class="header glass">
+  <a class="brand" href="index.html"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></a>
+  <nav class="nav">
+    <a class="" href="index.html">خانه</a>
+    <a class="" href="shop.html">فروشگاه</a>
+    <a href="shop.html?category=گیاه آپارتمانی">گیاهان</a>
+    <a href="shop.html?category=گلدان و اکسسوری">گلدان و اکسسوری</a>
+    <a href="blog.html">مجله سبز</a>
+    <a href="contact.html">تماس با ما</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="location.href='shop.html'">⌕</button>
+    <button class="icon-btn" onclick="location.href='account.html'">♙</button>
+    <button class="cart-btn" onclick="location.href='cart.html'">سبد خرید <span id="cartCount">۰</span></button>
+  </div>
+</header>
+<main><div class="container"><div class="section-head"><div><div class="eyebrow">CHECKOUT</div><h1 style="margin:0">تسویه حساب</h1></div></div><div class="cart-layout"><form class="form" onsubmit="event.preventDefault();startPayment()"><div class="form-grid"><div class="form-group"><label>نام و نام خانوادگی</label><input required></div><div class="form-group"><label>شماره موبایل</label><input required inputmode="tel"></div><div class="form-group"><label>استان</label><select required><option>تهران</option><option>اصفهان</option><option>شیراز</option><option>مشهد</option><option>سایر</option></select></div><div class="form-group"><label>شهر</label><input required></div></div><div class="form-group"><label>آدرس کامل</label><textarea required></textarea></div><div class="form-group"><label>روش ارسال</label><select id="shipping"><option value="post">پست پیشتاز</option><option value="tipax">تیپاکس</option><option value="express">ارسال سریع فروشگاه</option></select></div><p class="muted">هزینه ارسال در نسخه نهایی بر اساس شهر، وزن و روش ارسال به‌صورت خودکار محاسبه می‌شود.</p><button class="btn">پرداخت امن با زرین‌پال</button></form><aside class="summary"><h3>سفارش شما</h3><div id="checkoutSummary"></div></aside></div></div></main>
+<footer class="footer">
+  <div><div class="brand footer-brand"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></div><p>گیاهان زیبا برای فضاهای بهتر.</p></div>
+  <div><h4>دسترسی سریع</h4><a href="shop.html">فروشگاه</a><a href="blog.html">مجله سبز</a><a href="contact.html">تماس با ما</a></div>
+  <div><h4>خدمات</h4><a href="shipping.html">روش‌های ارسال</a><a href="faq.html">سوالات متداول</a><a href="account.html">پیگیری سفارش</a></div>
+  <div><h4>خبرنامه</h4><p>برای دریافت پیشنهادهای ویژه عضو شوید.</p><div class="newsletter"><input placeholder="ایمیل شما"><button onclick="showToast('عضویت شما ثبت شد')">عضویت</button></div></div>
+  <div class="footer-bottom">© ۱۴۰۵ VERA Botanique · تمامی حقوق محفوظ است</div>
+</footer>
+<script src="assets/js/app.js"></script>
+<script>
+const weight=cart.reduce((s,x)=>s+x.qty,0)*0.6;
+function shippingCost(){const s=document.getElementById('shipping')?.value||'post';const base=s==='post'?69000:s==='tipax'?95000:129000;return base+Math.max(0,Math.ceil(weight-1))*18000}
+function renderSummary(){const el=document.getElementById('checkoutSummary');if(!el)return;el.innerHTML=`<div class="summary-row"><span>کالاها</span><b>${fmt(cartTotal())}</b></div><div class="summary-row"><span>ارسال تقریبی</span><b>${fmt(shippingCost())}</b></div><hr><div class="summary-row"><b>جمع</b><b>${fmt(cartTotal()+shippingCost())}</b></div>`}
+document.getElementById('shipping').addEventListener('change',renderSummary);renderSummary();
+async function startPayment(){
+ if(!cart.length){showToast('سبد خرید خالی است');return}
+ const form=document.querySelector('form'),ins=form.querySelectorAll('input'),sels=form.querySelectorAll('select'),ta=form.querySelector('textarea');
+ const name=ins[0]?.value||'',phone=ins[1]?.value||'',province=sels[0]?.value||'',city=ins[2]?.value||'',address=ta?.value||'',shipping=sels[1]?.value||'';
+ const lines=cart.map(x=>{const p=products.find(p=>p.id==x.id);const price=p.discount?Math.round(p.price*(1-p.discount/100)):p.price;return `${p.name} × ${x.qty} = ${fmt(price*x.qty)}`}).join('
+');
+ const btn=form.querySelector('button'),old=btn.textContent;btn.disabled=true;btn.textContent='در حال ثبت سفارش...';
+ try{
+  await sendVeraEmail('سفارش جدید از سایت VERA Botanique',{'نام مشتری':name,'موبایل':phone,'استان':province,'شهر':city,'آدرس':address,'روش ارسال':shipping,'اقلام سفارش':lines,'جمع کالاها':fmt(cartTotal()),'هزینه ارسال':fmt(shippingCost()),'مبلغ کل':fmt(cartTotal()+shippingCost()),'زمان':new Date().toLocaleString('fa-IR'),'منبع':'Checkout سایت VERA'});
+  showToast('سفارش ثبت و ایمیل اطلاع‌رسانی ارسال شد');setTimeout(()=>location.href='payment.html',900);
+ }catch(e){showToast('ارسال اطلاعات سفارش ناموفق بود؛ دوباره تلاش کنید')}
+ finally{btn.disabled=false;btn.textContent=old}
+}
+</script>
+</body></html>

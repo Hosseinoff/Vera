@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>خانه | VERA Botanique</title>
+<meta name="description" content="VERA Botanique؛ فروشگاه آنلاین گل، گیاه، گلدان و اکسسوری با طراحی لوکس و ارسال به سراسر ایران.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://example.com/">
+<meta property="og:title" content="خانه | VERA Botanique">
+<meta property="og:description" content="فروشگاه لوکس گل و گیاه VERA Botanique">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div class="topbar">ارسال به سراسر ایران · ارسال رایگان برای سفارش‌های منتخب · پشتیبانی ۷ روز هفته</div>
+<header class="header glass">
+  <a class="brand" href="index.html"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></a>
+  <nav class="nav">
+    <a class="active" href="index.html">خانه</a>
+    <a class="" href="shop.html">فروشگاه</a>
+    <a href="shop.html?category=گیاه آپارتمانی">گیاهان</a>
+    <a href="shop.html?category=گلدان و اکسسوری">گلدان و اکسسوری</a>
+    <a href="blog.html">مجله سبز</a>
+    <a href="contact.html">تماس با ما</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="location.href='shop.html'">⌕</button>
+    <button class="icon-btn" onclick="location.href='account.html'">♙</button>
+    <button class="cart-btn" onclick="location.href='cart.html'">سبد خرید <span id="cartCount">۰</span></button>
+  </div>
+</header>
+<main>
+<section class="hero">
+ <div class="hero-content"><div class="eyebrow">VERA BOTANIQUE · زندگی سبز</div>
+ <h1>خانه‌ای که<br>نفس می‌کشد.</h1>
+ <p>انتخابی دقیق از گل‌ها، گیاهان آپارتمانی و اکسسوری‌های سبز؛ با تجربه خریدی آرام، لوکس و ساده.</p>
+ <a class="btn" href="shop.html">مشاهده فروشگاه</a> <a class="btn secondary" href="blog.html">راهنمای نگهداری</a></div>
+</section>
+<div class="container">
+<div class="features"><div class="feature">🌿 <b>انتخاب تخصصی</b><span class="muted">محصولات متنوع برای هر سبک فضا</span></div><div class="feature">🚚 <b>ارسال به سراسر ایران</b><span class="muted">پست، تیپاکس و ارسال انتخابی</span></div><div class="feature">🪴 <b>بسته‌بندی امن</b><span class="muted">آماده‌سازی ویژه برای گیاهان</span></div><div class="feature">✦ <b>ضمانت سلامت</b><span class="muted">پشتیبانی پس از خرید</span></div></div>
+<div class="section-head"><div><div class="eyebrow">CURATED COLLECTION</div><h2>انتخاب‌های این هفته</h2></div><a href="shop.html">مشاهده همه ←</a></div>
+<div id="featured" class="grid"></div>
+<div class="section-head"><div><div class="eyebrow">SHOP BY MOOD</div><h2>برای هر گوشه، یک انتخاب</h2></div></div>
+<div class="categories"><a class="category" href="shop.html?category=گیاه آپارتمانی"><h3>جنگل کوچک خانه</h3><p class="muted">گیاهان آپارتمانی مقاوم و چشم‌نواز</p></a><a class="category" href="shop.html?category=گل و گیاه گلدار"><h3>رنگ و عطر</h3><p class="muted">گل‌های زنده برای حال بهتر</p></a><a class="category" href="shop.html?category=گلدان و اکسسوری"><h3>جزئیات لوکس</h3><p class="muted">گلدان و اکسسوری برای کامل کردن فضا</p></a></div>
+</div></main>
+<footer class="footer">
+  <div><div class="brand footer-brand"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></div><p>گیاهان زیبا برای فضاهای بهتر.</p></div>
+  <div><h4>دسترسی سریع</h4><a href="shop.html">فروشگاه</a><a href="blog.html">مجله سبز</a><a href="contact.html">تماس با ما</a></div>
+  <div><h4>خدمات</h4><a href="shipping.html">روش‌های ارسال</a><a href="faq.html">سوالات متداول</a><a href="account.html">پیگیری سفارش</a></div>
+  <div><h4>خبرنامه</h4><p>برای دریافت پیشنهادهای ویژه عضو شوید.</p><div class="newsletter"><input placeholder="ایمیل شما"><button onclick="showToast('عضویت شما ثبت شد')">عضویت</button></div></div>
+  <div class="footer-bottom">© ۱۴۰۵ VERA Botanique · تمامی حقوق محفوظ است</div>
+</footer>
+<script src="assets/js/app.js"></script><script>renderFeatured();</script>
+<script>
+(function(){try{const c=JSON.parse(localStorage.getItem('vera_content')||'null');if(c){const h=document.querySelector('.hero h1'),p=document.querySelector('.hero p');if(h)h.innerHTML=c.heroTitle.replace(/\n/g,'<br>');if(p)p.textContent=c.heroText;const top=document.querySelector('.topbar');if(top)top.textContent=c.topbarText;}}catch(e){}})();
+</script></body></html>

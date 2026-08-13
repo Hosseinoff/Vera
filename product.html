@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>جزئیات محصول | VERA Botanique</title>
+<meta name="description" content="VERA Botanique؛ فروشگاه آنلاین گل، گیاه، گلدان و اکسسوری با طراحی لوکس و ارسال به سراسر ایران.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://example.com/">
+<meta property="og:title" content="جزئیات محصول | VERA Botanique">
+<meta property="og:description" content="فروشگاه لوکس گل و گیاه VERA Botanique">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div class="topbar">ارسال به سراسر ایران · ارسال رایگان برای سفارش‌های منتخب · پشتیبانی ۷ روز هفته</div>
+<header class="header glass">
+  <a class="brand" href="index.html"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></a>
+  <nav class="nav">
+    <a class="" href="index.html">خانه</a>
+    <a class="" href="shop.html">فروشگاه</a>
+    <a href="shop.html?category=گیاه آپارتمانی">گیاهان</a>
+    <a href="shop.html?category=گلدان و اکسسوری">گلدان و اکسسوری</a>
+    <a href="blog.html">مجله سبز</a>
+    <a href="contact.html">تماس با ما</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="location.href='shop.html'">⌕</button>
+    <button class="icon-btn" onclick="location.href='account.html'">♙</button>
+    <button class="cart-btn" onclick="location.href='cart.html'">سبد خرید <span id="cartCount">۰</span></button>
+  </div>
+</header>
+<main><div class="container"><div id="detail"></div></div></main>
+<footer class="footer">
+  <div><div class="brand footer-brand"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></div><p>گیاهان زیبا برای فضاهای بهتر.</p></div>
+  <div><h4>دسترسی سریع</h4><a href="shop.html">فروشگاه</a><a href="blog.html">مجله سبز</a><a href="contact.html">تماس با ما</a></div>
+  <div><h4>خدمات</h4><a href="shipping.html">روش‌های ارسال</a><a href="faq.html">سوالات متداول</a><a href="account.html">پیگیری سفارش</a></div>
+  <div><h4>خبرنامه</h4><p>برای دریافت پیشنهادهای ویژه عضو شوید.</p><div class="newsletter"><input placeholder="ایمیل شما"><button onclick="showToast('عضویت شما ثبت شد')">عضویت</button></div></div>
+  <div class="footer-bottom">© ۱۴۰۵ VERA Botanique · تمامی حقوق محفوظ است</div>
+</footer>
+<script src="assets/js/app.js"></script>
+<script>
+const id=Number(new URLSearchParams(location.search).get('id')||1),p=products.find(x=>x.id===id)||products[0],price=p.discount?Math.round(p.price*(1-p.discount/100)):p.price;
+document.getElementById('detail').innerHTML=`<div class="detail"><div><img class="detail-main-img" src="${p.image}" alt="${p.name}"></div><div><span class="tag">${p.category}</span><h1>${p.name}</h1><div class="rating">★ ${p.rating} از ۵ · ${fa(p.reviews)} نظر</div><p class="muted">${p.description}</p><div><span class="price" style="font-size:28px">${fmt(price)}</span>${p.discount?`<span class="old">${fmt(p.price)}</span>`:''}</div><div class="specs"><div class="spec">☀️ نور: <b>${p.light}</b></div><div class="spec">💧 آبیاری: <b>${p.water}</b></div><div class="spec">🌱 نگهداری: <b>${p.difficulty}</b></div><div class="spec">📐 سایز: <b>${p.size}</b></div></div><div class="qty"><button onclick="q.value=Math.max(1,+q.value-1)">−</button><input id="q" value="1" readonly><button onclick="q.value=+q.value+1">+</button></div><button class="btn" onclick="addToCart(${p.id},+q.value)">افزودن به سبد خرید</button> <button class="btn secondary" onclick="showToast('به علاقه‌مندی‌ها اضافه شد')">♡ علاقه‌مندی</button><hr style="border:0;border-top:1px solid #dfe8e1;margin:30px 0"><h3>توضیحات تکمیلی</h3><p class="muted">این بخش برای اطلاعات دقیق‌تر، شرایط نگهداری، ابعاد، جنس گلدان و نکات خرید طراحی شده است و از پنل مدیریت قابل ویرایش خواهد بود.</p></div></div>`;
+</script>
+</body></html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>فروشگاه | VERA Botanique</title>
+<meta name="description" content="VERA Botanique؛ فروشگاه آنلاین گل، گیاه، گلدان و اکسسوری با طراحی لوکس و ارسال به سراسر ایران.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://example.com/">
+<meta property="og:title" content="فروشگاه | VERA Botanique">
+<meta property="og:description" content="فروشگاه لوکس گل و گیاه VERA Botanique">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div id="toast" class="toast"></div>
+<div class="topbar">ارسال به سراسر ایران · ارسال رایگان برای سفارش‌های منتخب · پشتیبانی ۷ روز هفته</div>
+<header class="header glass">
+  <a class="brand" href="index.html"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></a>
+  <nav class="nav">
+    <a class="" href="index.html">خانه</a>
+    <a class="active" href="shop.html">فروشگاه</a>
+    <a href="shop.html?category=گیاه آپارتمانی">گیاهان</a>
+    <a href="shop.html?category=گلدان و اکسسوری">گلدان و اکسسوری</a>
+    <a href="blog.html">مجله سبز</a>
+    <a href="contact.html">تماس با ما</a>
+  </nav>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="location.href='shop.html'">⌕</button>
+    <button class="icon-btn" onclick="location.href='account.html'">♙</button>
+    <button class="cart-btn" onclick="location.href='cart.html'">سبد خرید <span id="cartCount">۰</span></button>
+  </div>
+</header>
+<main>
+<div class="container"><div class="section-head"><div><div class="eyebrow">VERA SHOP</div><h1 style="margin:0">فروشگاه</h1><p class="muted">صدها انتخاب برای خانه، محل کار و هدیه.</p></div></div>
+<div class="shop-layout"><aside class="sidebar"><b>فیلتر محصولات</b><label>دسته‌بندی</label><div id="catFilters" class="filter-row"></div><label>جستجو</label><input id="search" placeholder="نام محصول..."><label>نور</label><select id="light"><option value="">همه</option><option>کم</option><option>متوسط</option><option>زیاد</option></select><label>سطح نگهداری</label><select id="difficulty"><option value="">همه</option><option>آسان</option><option>متوسط</option></select><button class="btn small" style="width:100%;margin-top:15px" onclick="resetFilters()">حذف فیلترها</button></aside>
+<section><div class="shop-toolbar"><input id="quick" placeholder="جستجوی سریع در ۱۰۰ محصول..."><select id="sort" style="padding:11px;border:1px solid #dfe8e1;border-radius:14px"><option value="new">جدیدترین</option><option value="low">ارزان‌ترین</option><option value="high">گران‌ترین</option><option value="rating">محبوب‌ترین</option></select></div><div id="shopGrid" class="grid"></div><div id="pagination" class="pagination"></div></section></div></div></main>
+<footer class="footer">
+  <div><div class="brand footer-brand"><span class="brand-mark">V</span><span><b>VERA</b><small>BOTANIQUE</small></span></div><p>گیاهان زیبا برای فضاهای بهتر.</p></div>
+  <div><h4>دسترسی سریع</h4><a href="shop.html">فروشگاه</a><a href="blog.html">مجله سبز</a><a href="contact.html">تماس با ما</a></div>
+  <div><h4>خدمات</h4><a href="shipping.html">روش‌های ارسال</a><a href="faq.html">سوالات متداول</a><a href="account.html">پیگیری سفارش</a></div>
+  <div><h4>خبرنامه</h4><p>برای دریافت پیشنهادهای ویژه عضو شوید.</p><div class="newsletter"><input placeholder="ایمیل شما"><button onclick="showToast('عضویت شما ثبت شد')">عضویت</button></div></div>
+  <div class="footer-bottom">© ۱۴۰۵ VERA Botanique · تمامی حقوق محفوظ است</div>
+</footer>
+<script src="assets/js/app.js"></script>
+<script>
+const state={page:1,per:12,cat:'',q:'',light:'',difficulty:'',sort:'new'};
+const cats=[...new Set(products.map(p=>p.category))];
+document.getElementById('catFilters').innerHTML='<button class="chip active" data-cat="">همه</button>'+cats.map(c=>`<button class="chip" data-cat="${c}">${c}</button>`).join('');
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');state.cat=b.dataset.cat;state.page=1;renderShop()});
+const urlcat=new URLSearchParams(location.search).get('category'); if(urlcat){state.cat=urlcat;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.cat===urlcat))}
+['search','quick'].forEach(id=>document.getElementById(id).addEventListener('input',e=>{state.q=e.target.value;state.page=1;renderShop()}));
+['light','difficulty','sort'].forEach(id=>document.getElementById(id).addEventListener('change',e=>{state[id]=e.target.value;state.page=1;renderShop()}));
+function resetFilters(){state.cat=state.q=state.light=state.difficulty='';document.getElementById('search').value='';document.getElementById('quick').value='';document.getElementById('light').value='';document.getElementById('difficulty').value='';document.querySelectorAll('.chip').forEach((x,i)=>x.classList.toggle('active',i===0));renderShop()}
+function renderShop(){let arr=products.filter(p=>(!state.cat||p.category===state.cat)&&(!state.q||p.name.includes(state.q)||p.category.includes(state.q))&&(!state.light||p.light===state.light)&&(!state.difficulty||p.difficulty===state.difficulty));if(state.sort==='low')arr.sort((a,b)=>a.price-b.price);if(state.sort==='high')arr.sort((a,b)=>b.price-a.price);if(state.sort==='rating')arr.sort((a,b)=>b.rating-a.rating);const pages=Math.max(1,Math.ceil(arr.length/state.per));state.page=Math.min(state.page,pages);const slice=arr.slice((state.page-1)*state.per,state.page*state.per);document.getElementById('shopGrid').innerHTML=slice.length?slice.map(productCard).join(''):'<div class="empty" style="grid-column:1/-1">محصولی پیدا نشد.</div>';document.getElementById('pagination').innerHTML=Array.from({length:pages},(_,i)=>`<button class="${i+1===state.page?'active':''}" onclick="state.page=${i+1};renderShop()">${fa(i+1)}</button>`).join('')}
+renderShop();
+</script>
+</body></html>

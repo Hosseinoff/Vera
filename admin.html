@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>پنل مدیریت | VERA Botanique</title><meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body><script>if(sessionStorage.getItem('vera_admin_auth')!=='1'){location.replace('admin-login.html');}</script>
+<div id="toast" class="toast"></div>
+<div class="topbar">VERA BOTANIQUE · پنل مدیریت محلی · اطلاعات در مرورگر همین دستگاه ذخیره می‌شود</div>
+<div class="admin-shell">
+<aside class="admin-side">
+  <div class="brand" style="color:white;margin-bottom:20px"><span class="brand-mark">V</span><span><b style="color:white">VERA</b><small>ADMIN PANEL</small></span></div>
+  <button class="active" data-section="dashboard">📊 داشبورد</button>
+  <button data-section="products">🌿 محصولات</button>
+  <button data-section="orders">📦 سفارش‌ها</button>
+  <button data-section="content">📝 محتوا</button>
+  <button data-section="settings">⚙️ تنظیمات</button>
+  <a class="btn secondary" style="width:100%;margin-top:15px" href="index.html">مشاهده سایت</a>
+</aside>
+<main class="admin-main">
+ <div class="admin-top"><div><div class="eyebrow">VERA CMS / LOCAL</div><h1 id="sectionTitle" style="margin:0">داشبورد</h1></div><div style="display:flex;gap:7px"><button class="btn small" onclick="exportData()">خروجی گرفتن از اطلاعات</button><button class="btn secondary small" onclick="sessionStorage.removeItem('vera_admin_auth');location.href='admin-login.html'">خروج</button></div></div>
+ <section id="dashboardSection">
+   <div class="admin-cards">
+    <div class="admin-card"><span class="muted">محصولات</span><strong id="statProducts">۰</strong><span class="muted">قابل مدیریت</span></div>
+    <div class="admin-card"><span class="muted">موجودی</span><strong id="statStock">۰</strong><span class="muted">عدد</span></div>
+    <div class="admin-card"><span class="muted">تخفیف‌دار</span><strong id="statDiscount">۰</strong><span class="muted">محصول</span></div>
+    <div class="admin-card"><span class="muted">ارزش موجودی</span><strong id="statValue">۰</strong><span class="muted">تومان</span></div>
+   </div>
+   <div class="admin-panel"><h3>راهنمای سریع</h3><div class="notice">هر محصولی که در این پنل اضافه، ویرایش یا حذف کنید، در صفحات فروشگاه همین مرورگر بلافاصله از اطلاعات LocalStorage خوانده می‌شود.</div><p class="muted">این نسخه برای راه‌اندازی بدون Backend ساخته شده است. اطلاعات بین تب‌های همین مرورگر با رویداد storage همگام می‌شوند.</p></div>
+ </section>
+ <section id="productsSection" style="display:none">
+   <div class="admin-panel">
+    <div class="admin-toolbar"><input id="adminSearch" placeholder="جستجوی محصول..."><div class="admin-actions"><button class="btn small" onclick="openProduct()">+ محصول جدید</button><button class="btn secondary small" onclick="resetProducts()">بازگردانی ۱۰۰ محصول نمونه</button></div></div>
+    <div class="table-wrap"><table class="admin-table"><thead><tr><th>ID</th><th>تصویر</th><th>نام</th><th>دسته</th><th>قیمت</th><th>موجودی</th><th>تخفیف</th><th>عملیات</th></tr></thead><tbody id="productsRows"></tbody></table></div>
+   </div>
+ </section>
+ <section id="ordersSection" style="display:none"><div class="admin-panel"><h3>سفارش‌ها</h3><div class="notice">در حالت راه ۱، سفارش واقعی و پرداخت سمت سرور وجود ندارد. این بخش به‌صورت آماده برای اتصال به داده سفارشات نگه داشته شده است.</div><div id="ordersDemo"></div></div></section>
+ <section id="contentSection" style="display:none"><div class="admin-panel"><h3>مدیریت محتوای سریع</h3><div class="admin-form"><div><label>عنوان Hero صفحه اصلی</label><input id="heroTitle" value="خانه‌ای که نفس می‌کشد."></div><div><label>متن معرفی</label><input id="heroText" value="انتخابی دقیق از گل‌ها، گیاهان آپارتمانی و اکسسوری‌های سبز."></div><div class="full"><label>متن نوار بالایی</label><input id="topbarText" value="ارسال به سراسر ایران · ارسال رایگان برای سفارش‌های منتخب · پشتیبانی ۷ روز هفته"></div></div><button class="btn" style="margin-top:12px" onclick="saveContent()">ذخیره محتوا</button></div></section>
+ <section id="settingsSection" style="display:none"><div class="admin-panel"><h3>تنظیمات فروشگاه</h3><div class="admin-form"><div><label>نام فروشگاه</label><input id="storeName" value="VERA Botanique"></div><div><label>شهر شعبه</label><input id="storeCity" value="تهران"></div><div class="full"><label>آدرس شعبه</label><textarea id="storeAddress">تهران، خیابان ولیعصر، یک آدرس نمونه برای ویرایش آینده</textarea></div><div><label>روش‌های ارسال</label><input id="shippingMethods" value="پست، تیپاکس، ارسال سریع فروشگاه"></div><div><label>درگاه</label><input value="زرین‌پال" disabled></div></div><button class="btn" style="margin-top:12px" onclick="saveSettings()">ذخیره تنظیمات</button></div></section>
+</main></div>
+<div class="modal-back" id="modal"><div class="modal"><div class="admin-top"><h2 id="modalTitle">محصول جدید</h2><button class="icon-btn" onclick="closeProduct()">×</button></div>
+<form id="productForm" class="admin-form">
+<input type="hidden" id="pid">
+<div><label>نام محصول</label><input id="pname" required></div>
+<div><label>دسته‌بندی</label><select id="pcat"></select></div>
+<div><label>قیمت (تومان)</label><input id="pprice" type="number" min="0" required></div>
+<div><label>تخفیف (%)</label><input id="pdiscount" type="number" min="0" max="100" value="0"></div>
+<div><label>موجودی</label><input id="pstock" type="number" min="0" value="10"></div>
+<div><label>امتیاز</label><input id="prating" type="number" min="0" max="5" step=".1" value="4.8"></div>
+<div><label>نور</label><select id="plight"><option>کم</option><option>متوسط</option><option>زیاد</option></select></div>
+<div><label>آبیاری</label><select id="pwater"><option>کم</option><option>متوسط</option><option>زیاد</option></select></div>
+<div><label>سطح نگهداری</label><select id="pdifficulty"><option>آسان</option><option>متوسط</option></select></div>
+<div><label>سایز</label><select id="psize"><option>کوچک</option><option>متوسط</option><option>بزرگ</option></select></div>
+<div class="full"><label>آدرس تصویر</label><input id="pimage" required></div>
+<div class="full"><label>توضیحات</label><textarea id="pdesc"></textarea></div>
+<div class="full"><button class="btn">ذخیره محصول</button> <button type="button" class="btn secondary" onclick="closeProduct()">انصراف</button></div>
+</form></div></div>
+<script src="assets/js/app.js"></script>
+<script>
+let current=products;
+const cats=[...new Set(products.map(p=>p.category))];
+document.getElementById('pcat').innerHTML=cats.map(x=>`<option>${x}</option>`).join('');
+const sections=['dashboard','products','orders','content','settings'];
+document.querySelectorAll('.admin-side button').forEach(btn=>btn.onclick=()=>showSection(btn.dataset.section));
+function showSection(s){
+ document.querySelectorAll('[id$="Section"]').forEach(x=>x.style.display='none');
+ document.getElementById(s+'Section').style.display='block';
+ document.querySelectorAll('.admin-side button').forEach(x=>x.classList.toggle('active',x.dataset.section===s));
+ document.getElementById('sectionTitle').textContent={dashboard:'داشبورد',products:'مدیریت محصولات',orders:'مدیریت سفارش‌ها',content:'مدیریت محتوا',settings:'تنظیمات'}[s];
+ if(s==='products')renderAdmin();
+}
+function renderAdmin(){
+ products=getProducts();
+ const q=(document.getElementById('adminSearch').value||'').trim();
+ const arr=products.filter(p=>!q||p.name.includes(q)||p.category.includes(q));
+ document.getElementById('productsRows').innerHTML=arr.map(p=>`<tr>
+ <td>${fa(p.id)}</td><td><img src="${p.image}" style="width:48px;height:48px;object-fit:cover;border-radius:10px"></td>
+ <td><b>${p.name}</b></td><td>${p.category}</td><td>${fmt(p.price)}</td><td>${fa(p.stock)}</td><td>${fa(p.discount)}%</td>
+ <td><div class="admin-actions"><button class="chip edit" onclick="openProduct(${p.id})">ویرایش</button><button class="chip danger" onclick="deleteProduct(${p.id})">حذف</button></div></td>
+ </tr>`).join('');
+ document.getElementById('statProducts').textContent=fa(products.length);
+ document.getElementById('statStock').textContent=fa(products.reduce((s,p)=>s+Number(p.stock||0),0));
+ document.getElementById('statDiscount').textContent=fa(products.filter(p=>p.discount>0).length);
+ document.getElementById('statValue').textContent=fmt(products.reduce((s,p)=>s+p.price*(p.stock||0),0));
+}
+function openProduct(id){
+ const p=id?products.find(x=>x.id===id):{id:'',name:'',category:cats[0],price:0,discount:0,stock:10,rating:4.8,light:'متوسط',water:'متوسط',difficulty:'آسان',size:'متوسط',image:'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=900&q=80',description:''};
+ document.getElementById('modalTitle').textContent=id?'ویرایش محصول':'محصول جدید';
+ pid.value=p.id;pname.value=p.name;pcat.value=p.category;pprice.value=p.price;pdiscount.value=p.discount;pstock.value=p.stock;prating.value=p.rating;plight.value=p.light;pwater.value=p.water;pdifficulty.value=p.difficulty;psize.value=p.size;pimage.value=p.image;pdesc.value=p.description;
+ document.getElementById('modal').classList.add('show');
+}
+function closeProduct(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('productForm').onsubmit=e=>{
+ e.preventDefault();products=getProducts();
+ const data={id:Number(pid.value)||Date.now(),name:pname.value,category:pcat.value,price:Number(pprice.value),discount:Number(pdiscount.value),stock:Number(pstock.value),rating:Number(prating.value),reviews:0,light:plight.value,water:pwater.value,difficulty:pdifficulty.value,size:psize.value,image:pimage.value,description:pdesc.value};
+ const index=products.findIndex(x=>x.id===data.id);if(index>=0)products[index]=data;else products.unshift(data);
+ setProducts(products);closeProduct();renderAdmin();showToast('محصول با موفقیت ذخیره شد');
+};
+function deleteProduct(id){if(!confirm('این محصول حذف شود؟'))return;products=getProducts().filter(x=>x.id!==id);setProducts(products);renderAdmin();showToast('محصول حذف شد')}
+function resetProducts(){if(!confirm('اطلاعات محصولات به ۱۰۰ نمونه اولیه برگردد؟'))return;localStorage.setItem(STORAGE_KEY,JSON.stringify(seedProducts));products=getProducts();renderAdmin();showToast('محصولات نمونه بازگردانی شدند')}
+document.getElementById('adminSearch').oninput=renderAdmin;
+function exportData(){const blob=new Blob([JSON.stringify({products:getProducts(),content:localStorage.getItem('vera_content'),settings:localStorage.getItem('vera_settings')},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='vera-backup.json';a.click();URL.revokeObjectURL(a.href);showToast('فایل پشتیبان ساخته شد')}
+function saveContent(){localStorage.setItem('vera_content',JSON.stringify({heroTitle:heroTitle.value,heroText:heroText.value,topbarText:topbarText.value}));showToast('محتوا ذخیره شد')}
+function saveSettings(){localStorage.setItem('vera_settings',JSON.stringify({storeName:storeName.value,storeCity:storeCity.value,storeAddress:storeAddress.value,shippingMethods:shippingMethods.value}));showToast('تنظیمات ذخیره شد')}
+function loadAdminData(){const c=JSON.parse(localStorage.getItem('vera_content')||'null');if(c){heroTitle.value=c.heroTitle||heroTitle.value;heroText.value=c.heroText||heroText.value;topbarText.value=c.topbarText||topbarText.value}const s=JSON.parse(localStorage.getItem('vera_settings')||'null');if(s){storeName.value=s.storeName||storeName.value;storeCity.value=s.storeCity||storeCity.value;storeAddress.value=s.storeAddress||storeAddress.value;shippingMethods.value=s.shippingMethods||shippingMethods.value}renderAdmin()}
+loadAdminData();
+</script>
+</body></html>
